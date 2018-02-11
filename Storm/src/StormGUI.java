@@ -5,7 +5,7 @@ import java.io.File;
 public class StormGUI extends JFrame{
 	
 	
-
+	RecieveFileLogic recieveFileLogic = new RecieveFileLogic();
 	
 	private JTextArea txtArea;
 	private JButton btnRecvFile, btnSendFile;
@@ -80,38 +80,11 @@ public class StormGUI extends JFrame{
 	}
 	
 	private String getPin() {
-		boolean pinValid = false;
-		String pin = "";
-		while (pinValid == false) {
-			pin = JOptionPane.showInputDialog(this, "Please enter partner's ID");
-			if (pin == null || pin.isEmpty()) { 																			///In future add pin length checks to ensure a valid pin has been entered 
-				JOptionPane.showMessageDialog(this,
-					    "Please enter a valid PIN.",
-					    "Invalid PIN",
-					    JOptionPane.ERROR_MESSAGE);
-			} else {
-				pinValid = true;
-			}
-		}
-		return pin;
-		
+		return recieveFileLogic.getPin();
 	}
 	
 	private File getFile() {
-		File selectedFile = null;
-		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-		int result = fileChooser.showOpenDialog(this);
-		if (result == JFileChooser.APPROVE_OPTION) {
-		    selectedFile = fileChooser.getSelectedFile();
-		} else {
-			JOptionPane.showMessageDialog(this,
-				    "Please choose a file.",
-				    "No file selected",
-				    JOptionPane.ERROR_MESSAGE);
-		}
-		return selectedFile;
-		
+		return recieveFileLogic.getFile();
 	}
 	
 	///Receive File Event Actions
