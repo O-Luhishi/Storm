@@ -24,16 +24,19 @@ public class Client {
 			FileInputStream fis = new FileInputStream(file);
 			byte[] buffer = new byte[4096];
 			
+	    	System.out.println("[STATUS] : Running Process");
 			while (fis.read(buffer) > 0) {
 				dos.write(buffer);
 			}
 			fis.close();
 			dos.close();
+	    	System.out.println("[STATUS] : Process Completed");
 		}
 		
 		
 	    public static void main(String[] args) throws IOException {
-	    	Client client = new Client("localhost", 1988, "D:\\My Document\\cat.txt");
+	    	System.out.println("[STATUS] : Sending Over File From Client To Server");
+	    	Client client = new Client("192.168.0.102", 1988, "/Users/oluhishi/Documents/osama-compute.txt");
 	    }
 	}
 

@@ -15,6 +15,7 @@ public class Server extends Thread {
 			ss = new ServerSocket(port);
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("SERVER STOPPED");
 		}
 	}
 	
@@ -25,13 +26,14 @@ public class Server extends Thread {
 				saveFile(clientSock);
 			} catch (IOException e) {
 				e.printStackTrace();
+				System.out.println("SERVER STOPPED");
 			}
 		}
 	}
 
 	private void saveFile(Socket clientSock) throws IOException {
 		DataInputStream dis = new DataInputStream(clientSock.getInputStream());
-		FileOutputStream fos = new FileOutputStream("testfile.jpg");
+		FileOutputStream fos = new FileOutputStream("D:\\My Document\\testfile.txt");
 		byte[] buffer = new byte[4096];
 		
 		int filesize = 15123; // Send file size in separate msg
@@ -52,6 +54,7 @@ public class Server extends Thread {
 	public static void main(String[] args) {
 		Server fs = new Server(1988);
 		fs.start();
+		System.out.print("Server Is Running");
 	}
 
 }
