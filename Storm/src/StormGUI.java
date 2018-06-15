@@ -5,11 +5,14 @@ import java.io.File;
 public class StormGUI extends JFrame{
 	
 	
-	RecieveFileLogic recieveFileLogic = new RecieveFileLogic();
+	SendFileLogic sendFileLogic = new SendFileLogic();
 	
-	private JTextArea txtArea;
-	private JButton btnRecvFile, btnSendFile;
-	private JPanel recievePanel, sendPanel;
+	public JTextArea txtArea;
+	public JButton btnRecvFile, btnSendFile;
+	public JPanel recievePanel, sendPanel;
+	public JTextField txtValidateID;
+	public JLabel lblFileName, lblEnterPartnersId, lblChooseFile, lblFileSelected;
+	public JButton btnValidateId;
 	
 	public StormGUI(){
 		super("Storm");
@@ -34,13 +37,48 @@ public class StormGUI extends JFrame{
 		sendPanel.setLayout(null);
 		
 		btnSendFile = new JButton();
-		btnSendFile.setText("Send File");
-		btnSendFile.setBounds(10, 50, 120, 25);
+		btnSendFile.setText("Select");
+		btnSendFile.setBounds(10, 117, 120, 25);
 		sendPanel.add(btnSendFile);
+		btnSendFile.setEnabled(false);
+		
+		lblEnterPartnersId = new JLabel("Enter Partner's ID:");
+		lblEnterPartnersId.setBounds(10, 23, 120, 14);
+		sendPanel.add(lblEnterPartnersId);
+		
+		txtValidateID = new JTextField();
+		txtValidateID.setBounds(10, 45, 86, 20);
+		sendPanel.add(txtValidateID);
+		txtValidateID.setColumns(10);
+		
+		btnValidateId = new JButton("Validate ID");
+		btnValidateId.setBounds(148, 44, 126, 23);
+		sendPanel.add(btnValidateId);
+		
+		lblChooseFile = new JLabel("Choose File:");
+		lblChooseFile.setBounds(10, 96, 92, 14);
+		sendPanel.add(lblChooseFile);
+		
+		lblFileSelected = new JLabel("File Selected:");
+		lblFileSelected.setBounds(10, 153, 114, 14);
+		sendPanel.add(lblFileSelected);
+		
+		lblFileName = new JLabel("");
+		lblFileName.setBounds(107, 153, 105, 14);
+		sendPanel.add(lblFileName);
 		
 		btnSendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				btnSendFileActionPerformed(evt);
+			}
+			
+		});
+		
+		// Gets ID Entered From Text Field
+		btnValidateId.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				String inputID = txtValidateID.getText();
+				setPin(evt, inputID);
 			}
 		});
 		
@@ -77,14 +115,28 @@ public class StormGUI extends JFrame{
 		File file = getFile();
 		String result = ("PIN: "+ pin + " File to upload: " + file.getAbsolutePath());
 		JOptionPane.showMessageDialog(this, result);
+		lblFileName.setText(file.getName());
+	}
+	
+	// When Button Is Pressed:
+		// - Checks For Empty or Non-Int Value Entered
+		// - Makes Button Disabled
+	private void setPin(ActionEvent evt, String inputPin) {
+		String tmp = inputPin;
+		if (inputPin.isEmpty()) {
+			return;
+		}else {
+			btnSendFile.setEnabled(true);
+		sendFileLogic.setPartnerID(tmp);
+		}
 	}
 	
 	private String getPin() {
-		return recieveFileLogic.getPin();
+		return sendFileLogic.getPartnerID();
 	}
 	
 	private File getFile() {
-		return recieveFileLogic.getFile();
+		return sendFileLogic.getFile();
 	}
 	
 	///Receive File Event Actions
