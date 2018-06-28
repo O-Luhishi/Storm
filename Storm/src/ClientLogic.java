@@ -1,4 +1,3 @@
-package NetworkingTest;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,13 +6,22 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 
-public class Client {
+public class ClientLogic {
 		private Socket socket;
 		
-		public Client(String host, int port, String file) {
+		private String hostName;
+		private String fileName;
+		
+		// Host And File Passed Through The UI - Port Automatically Assigned
+		public ClientLogic(String host, String file) {
+			hostName = host;
+			fileName = file;
+		}
+		
+		public void runClient() {
 			try {
-				socket = new Socket(host, port);
-				sendFile(file);
+				socket = new Socket(hostName, 1988);
+				sendFile(fileName);
 		    		System.out.println("Running");
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -34,6 +42,7 @@ public class Client {
 		
 		
 	    public static void main(String[] args) throws IOException {
-	    	Client client = new Client("192.168.0.102", 1988, "/Users/oluhishi/Documents/osama-compute.txt");
+	    	ClientLogic client = new ClientLogic("192.168.0.102", "/Users/oluhishi/Documents/osama-compute.txt");
+	    	client.runClient();
 	    }
 	}

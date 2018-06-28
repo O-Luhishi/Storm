@@ -38,6 +38,10 @@ public class SendFileLogic {
 		return PartnerID;
 	}
 	
+	public void sendFile(String hostName, String fileName) {
+    	ClientLogic client = new ClientLogic(hostName, fileName);
+    	client.runClient();
+	}
 	
 	
 //	public String getPin() {
